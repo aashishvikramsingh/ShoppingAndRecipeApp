@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  isShoppingVisible = true;
+  onSectionClick(section: string) {
+    this.isShoppingVisible = section === 'Shopping';
+    console.log(section);
+  }
 }
