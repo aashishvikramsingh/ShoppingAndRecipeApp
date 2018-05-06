@@ -17,4 +17,13 @@ export class HeaderComponent {
   fetchRecipes() {
     this.dataStorageService.fetchRecipes();
   }
+
+  saveShoppingList() {
+    this.dataStorageService.saveShoppingList()
+      .subscribe();
+  }
+
+  fetchShoppingList() {
+    this.dataStorageService.fetchShoppingList();
+  }
 }

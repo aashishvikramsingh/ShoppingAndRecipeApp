@@ -40,4 +40,9 @@ export class ShoppingListService {
     this.ingredientsChanged.next(this.ingredients.slice());
   }
 
+  refreshIngredients(ingredients: Ingredients[]) {
+    this.ingredients = ingredients;
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
 }
