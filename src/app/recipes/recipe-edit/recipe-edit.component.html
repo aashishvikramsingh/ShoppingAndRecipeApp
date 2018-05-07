@@ -43,11 +43,15 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col-xs-12" formArrayName="ingredients">
+          <!--used getControls(recipeForm, 'ingredients') instead of recipeForm.get('ingredients').controls
+          as there is bug in Angular5 for this. (typecasting is missing)-->
           <div class="row recipeIngredient_style"
-               *ngFor="let ingredientControl of recipeForm.get('ingredients').controls; let i = index;"
+               *ngFor="let ingredientControl of getControls(recipeForm, 'ingredients'); let i = index;"
                 [formGroupName]="i">
+
             <div class="col-xs-7">
               <input type="text" formControlName="name" class="form-control">
             </div>

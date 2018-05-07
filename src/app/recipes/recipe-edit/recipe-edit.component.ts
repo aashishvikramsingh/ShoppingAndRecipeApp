@@ -85,4 +85,8 @@ export class RecipeEditComponent implements OnInit {
     this.route.navigate(['../'], {relativeTo: this.activatedRoute});
   }
 
+  getControls(frmGrp: FormGroup, key: string) {
+    return (<FormArray>frmGrp.controls[key]).controls;
+  }
+
 }
