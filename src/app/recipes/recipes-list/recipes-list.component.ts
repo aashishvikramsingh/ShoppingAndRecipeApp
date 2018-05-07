@@ -3,6 +3,7 @@ import { Recipe } from '../recipe.model';
 import {RecipeService} from '../recipe.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class RecipesListComponent implements OnInit, OnDestroy {
 
   constructor(private recipeService: RecipeService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.recipes = this.recipeService.getRecipes();
@@ -35,6 +37,10 @@ export class RecipesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  isAuthenticated() {
+    return this.authenticationService.isAuthenticated();
   }
 
 

@@ -5,15 +5,20 @@ import {ShoppingListComponent} from './shopping-list/shopping-list.component';
 import {RecipeStartupComponent} from './recipes/recipe-startup/recipe-startup.component';
 import {RecipesDetailComponent} from './recipes/recipes-detail/recipes-detail.component';
 import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
+import {SignupComponent} from './authentication/signup/signup.component';
+import {SigninComponent} from './authentication/signin/signin.component';
+import {AuthenticationGuardService} from './authentication/authentication-guard.service';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/recipes', pathMatch: 'full'},
   {path: 'recipes', component: RecipesComponent, children : [
     { path: '', component: RecipeStartupComponent},
-    { path: 'new', component: RecipeEditComponent},
+    { path: 'new', component: RecipeEditComponent, canActivate: [AuthenticationGuardService]},
     { path: ':id', component: RecipesDetailComponent},
-    { path: ':id/edit', component: RecipeEditComponent}]},
-  {path: 'shopping-list', component: ShoppingListComponent}];
+    { path: ':id/edit', component: RecipeEditComponent, canActivate: [AuthenticationGuardService]}]},
+  {path: 'shopping-list', component: ShoppingListComponent},
+  {path: 'signup', component: SignupComponent},
+  {path: 'signin', component: SigninComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],

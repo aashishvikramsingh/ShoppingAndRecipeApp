@@ -1,10 +1,21 @@
 
 <div class="row">
+  <div class="col-xs-12">
+    <ng-template [ngIf]="notificationBannerFlag">
+      <div class="col-xs-12">
+        <h4 style="color: red">
+          Login to edit Shopping List items
+        </h4>
+      </div>
+    </ng-template>
+  </div>
   <div class="col-xs-10">
     <app-shopping-list-edit></app-shopping-list-edit>
     <hr>
+
     <ul>
-      <a *ngFor="let item of ingredients; let i = index" class="list-group-item" style="cursor: pointer" (click)="onEditItem(i)">
+      <a *ngFor="let item of ingredients; let i = index" class="list-group-item" style="cursor: pointer"
+         (click)="isAuthenticated() ? onEditItem(i) : displayBanner()">
         <span>{{item.name}} </span><span class="pull-right">{{item.amount}}</span>
       </a>
     </ul>

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {DataStorageService} from '../shared/data-storage.service';
+import {AuthenticationService} from '../authentication/authentication.service';
 
 @Component({
   selector : 'app-header',
@@ -7,7 +8,8 @@ import {DataStorageService} from '../shared/data-storage.service';
   styleUrls : ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(private dataStorageService: DataStorageService) {}
+  constructor(private dataStorageService: DataStorageService,
+              private authenticationService: AuthenticationService) {}
 
   saveRecipes() {
     this.dataStorageService.saveRecipes()
@@ -25,5 +27,13 @@ export class HeaderComponent {
 
   fetchShoppingList() {
     this.dataStorageService.fetchShoppingList();
+  }
+
+  isAuthenticate() {
+    return this.authenticationService.isAuthenticated();
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 }

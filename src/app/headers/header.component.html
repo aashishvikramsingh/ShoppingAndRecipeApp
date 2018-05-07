@@ -9,17 +9,27 @@
         <li routerLinkActive="active"><a routerLink = "/shopping-list">Shopping List</a></li>
         <li routerLinkActive="active"><a routerLink = "/recipes">Recipe List</a></li>
       </ul>
+
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropdown>
-          <a class="dropdown-toggle" role="button" style="cursor: pointer">Manage <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a style="cursor: pointer" (click)="fetchRecipes()">Fetch Recipes</a></li>
-            <li><a style="cursor: pointer" (click)="saveRecipes()">Save Recipes</a></li>
-            <hr>
-            <li><a style="cursor: pointer" (click)="fetchShoppingList()">Fetch ShoppingList</a></li>
-            <li><a style="cursor: pointer" (click)="saveShoppingList()">Save ShoppingList</a></li>
-          </ul>
-        </li>
+        <!--If condition is to be applied on multiple elements, use [ngIf] instead of *ngIf-->
+        <ng-template [ngIf]="!isAuthenticate()">
+          <li><a routerLink="/signin">SignIn</a></li>
+          <li><a routerLink="/signup">SignUp</a></li>
+        </ng-template>
+        <ng-template [ngIf]="isAuthenticate()">
+          <li><a (click)="logout()" style="cursor: pointer">Logout</a></li>
+          <li class="dropdown" appDropdown>
+            <a class="dropdown-toggle" role="button" style="cursor: pointer">Manage <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a style="cursor: pointer" (click)="fetchRecipes()">Fetch Recipes</a></li>
+              <li><a style="cursor: pointer" (click)="saveRecipes()">Save Recipes</a></li>
+              <hr>
+              <li><a style="cursor: pointer" (click)="fetchShoppingList()">Fetch ShoppingList</a></li>
+              <li><a style="cursor: pointer" (click)="saveShoppingList()">Save ShoppingList</a></li>
+            </ul>
+          </li>
+        </ng-template>
+
       </ul>
     </div>
   </div>

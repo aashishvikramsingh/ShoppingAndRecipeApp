@@ -3,6 +3,7 @@ import {Ingredients} from '../../shared/ingredients.model';
 import {ShoppingListService} from '../shoppingList.service';
 import {NgForm} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -17,7 +18,8 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   edittedItemIndex: number;
   edittedIngredient: Ingredients;
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  constructor(private shoppingListService: ShoppingListService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.subscription = this.shoppingListService.editingItem
@@ -64,6 +66,10 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
       this.shoppingListService.deleteItem(this.edittedItemIndex);
       this.clearFields();
     }
+  }
+
+  isAuthenticated() {
+    return this.authenticationService.isAuthenticated();
   }
 
 }

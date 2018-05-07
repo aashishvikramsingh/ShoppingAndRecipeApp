@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Ingredients } from '../shared/ingredients.model';
 import {ShoppingListService} from './shoppingList.service';
 import {Subscription} from 'rxjs/Subscription';
+import {AuthenticationService} from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -14,7 +15,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private shoppingListService: ShoppingListService) {
+  notificationBannerFlag = false;
+
+  constructor(private shoppingListService: ShoppingListService,
+              private authenticationService: AuthenticationService) {
 
   }
   ngOnInit() {
@@ -31,6 +35,16 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   onEditItem(index: number) {
     this.shoppingListService.editingItem.next(index);
+  }
+
+
+  isAuthenticated() {
+    return this.authenticationService.isAuthenticated();
+  }
+
+  displayBanner() {
+    this.notificationBannerFlag = true;
+    setTimeout(() => this.notificationBannerFlag = false, 3000);
   }
 
 }

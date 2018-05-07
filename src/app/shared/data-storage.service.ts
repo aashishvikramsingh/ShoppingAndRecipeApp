@@ -5,20 +5,24 @@ import {Recipe} from '../recipes/recipe.model';
 import {ShoppingListService} from '../shopping-list/shoppingList.service';
 import {Ingredients} from './ingredients.model';
 import 'rxjs/add/operator/map';
+import {AuthenticationService} from '../authentication/authentication.service';
 
 @Injectable()
 export class DataStorageService {
   constructor(private http: HttpClient, private recipeService: RecipeService,
-              private shoppingListService: ShoppingListService) {}
+              private shoppingListService: ShoppingListService,
+              private authenticationService: AuthenticationService) {}
 
   saveRecipes() {
-    return this.http.put('https://shoppingandrecipeapp.firebaseio.com/recipes.json',
+    const token = this.authenticationService.getToken();
+    return this.http.put('https://shoppingandrecipeapp.firebaseio.com/recipes.json?auth=' + token,
       this.recipeService.getRecipes());
 
   }
 
   fetchRecipes() {
-    return this.http.get<Recipe[]>('https://shoppingandrecipeapp.firebaseio.com/recipes.json')
+    const token = this.authenticationService.getToken();
+    return this.http.get<Recipe[]>('https://shoppingandrecipeapp.firebaseio.com/recipes.json?auth=' + token)
       .map((response) => {
         const recipes: Recipe[] = response;
         for (const recipe of recipes) {
@@ -35,12 +39,14 @@ export class DataStorageService {
   }
 
   saveShoppingList() {
-    return this.http.put('https://shoppingandrecipeapp.firebaseio.com/shoppingList.json',
+    const token = this.authenticationService.getToken();
+    return this.http.put('https://shoppingandrecipeapp.firebaseio.com/shoppingList.json?auth=' + token,
       this.shoppingListService.getIngredients());
   }
 
   fetchShoppingList() {
-    return this.http.get<Ingredients[]>('https://shoppingandrecipeapp.firebaseio.com/shoppingList.json')
+    const token = this.authenticationService.getToken();
+    return this.http.get<Ingredients[]>('https://shoppingandrecipeapp.firebaseio.com/shoppingList.json?auth=' + token)
       .subscribe((response) => {
         const ingredients: Ingredients[] = response;
         this.shoppingListService.refreshIngredients(ingredients);
