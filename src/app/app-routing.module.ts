@@ -10,13 +10,13 @@ import {SigninComponent} from './authentication/signin/signin.component';
 import {AuthenticationGuardService} from './authentication/authentication-guard.service';
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: '/recipes', pathMatch: 'full'},
-  {path: 'recipes', component: RecipesComponent, children : [
+  {path: '', redirectTo: '/signin', pathMatch: 'full'},
+  {path: 'recipes', component: RecipesComponent, canActivate: [AuthenticationGuardService], children : [
     { path: '', component: RecipeStartupComponent},
-    { path: 'new', component: RecipeEditComponent, canActivate: [AuthenticationGuardService]},
+    { path: 'new', component: RecipeEditComponent, },
     { path: ':id', component: RecipesDetailComponent},
-    { path: ':id/edit', component: RecipeEditComponent, canActivate: [AuthenticationGuardService]}]},
-  {path: 'shopping-list', component: ShoppingListComponent},
+    { path: ':id/edit', component: RecipeEditComponent}]},
+  {path: 'shopping-list', component: ShoppingListComponent, canActivate: [AuthenticationGuardService]},
   {path: 'signup', component: SignupComponent},
   {path: 'signin', component: SigninComponent}];
 

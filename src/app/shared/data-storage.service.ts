@@ -15,14 +15,14 @@ export class DataStorageService {
 
   saveRecipes() {
     const token = this.authenticationService.getToken();
-    return this.http.put('https://shoppingandrecipeapp.firebaseio.com/recipes.json?auth=' + token,
+    return this.http.put('https://shoppingandrecipeapp.firebaseio.com/' + token.uid + '/recipes.json?auth=' + token.tok,
       this.recipeService.getRecipes());
 
   }
 
   fetchRecipes() {
     const token = this.authenticationService.getToken();
-    return this.http.get<Recipe[]>('https://shoppingandrecipeapp.firebaseio.com/recipes.json?auth=' + token)
+    return this.http.get<Recipe[]>('https://shoppingandrecipeapp.firebaseio.com/' + token.uid + '/recipes.json?auth=' + token.tok)
       .map((response) => {
         const recipes: Recipe[] = response;
         for (const recipe of recipes) {
@@ -40,13 +40,13 @@ export class DataStorageService {
 
   saveShoppingList() {
     const token = this.authenticationService.getToken();
-    return this.http.put('https://shoppingandrecipeapp.firebaseio.com/shoppingList.json?auth=' + token,
+    return this.http.put('https://shoppingandrecipeapp.firebaseio.com/' + token.uid + '/shoppingList.json?auth=' + token.tok,
       this.shoppingListService.getIngredients());
   }
 
   fetchShoppingList() {
     const token = this.authenticationService.getToken();
-    return this.http.get<Ingredients[]>('https://shoppingandrecipeapp.firebaseio.com/shoppingList.json?auth=' + token)
+    return this.http.get<Ingredients[]>('https://shoppingandrecipeapp.firebaseio.com/' + token.uid + '/shoppingList.json?auth=' + token.tok)
       .subscribe((response) => {
         const ingredients: Ingredients[] = response;
         this.shoppingListService.refreshIngredients(ingredients);

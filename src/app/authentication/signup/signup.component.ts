@@ -18,5 +18,6 @@ export class SignupComponent implements OnInit {
     const email = signUpForm.value.email;
     const password = signUpForm.value.password;
     this.authenticationService.signUp(email, password);
+
   }
 }

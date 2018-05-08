@@ -10,27 +10,42 @@ export class AuthenticationService {
   constructor(private router: Router) {}
 
   signUp(email: string, password: string) {
+
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .catch((e) => console.log(`sign up error ${e}`));
+      .then(response => {
+
+        this.signIn(email, password);
+      })
+      .catch((e) => {
+        console.log(`sign up error ${e}`);
+
+      });
   }
 
   signIn(email: string, password: string) {
+    this.token = null;
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((respone) => {
-      this.router.navigate(['/']);
-      firebase.auth().currentUser.getIdToken()
+        const uid = respone.uid;
+        this.router.navigate(['/recipes']);
+        firebase.auth().currentUser.getIdToken()
         .then((token: string) => {
-        this.token = token;
+        this.token = {
+          tok: token,
+          uid: uid
+          };
         });
-
       })
-      .catch((e) => console.log(`sign up error ${e}`));
+      .catch((e) => {
+        console.log(`sign In error`);
+
+      });
   }
 
   getToken() {
     firebase.auth().currentUser.getIdToken()
       .then((token: string) => {
-        this.token = token;
+        this.token.tok = token;
       });
     return this.token;
   }
