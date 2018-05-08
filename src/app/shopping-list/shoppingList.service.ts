@@ -8,15 +8,8 @@ export class ShoppingListService {
   editingItem = new Subject<number>();
 
   private ingredients: Ingredients[] = [];
-  //   [
-  //   new Ingredients('Apple', 10),
-  //   new Ingredients('Orange', 5)
-  // ];
-  constructor() {}
 
-  getIngredients() {
-    // return this.ingredients.slice();
-  }
+  constructor() {}
 
   getIngredient(ing: number) {
     return this.ingredients.slice()[ing];
