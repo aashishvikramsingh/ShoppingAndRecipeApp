@@ -6,10 +6,11 @@ export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredients[]>();
   editingItem = new Subject<number>();
 
-  private ingredients = [
-    new Ingredients('Apple', 10),
-    new Ingredients('Orange', 5)
-  ];
+  private ingredients: Ingredients[] = [];
+  //   [
+  //   new Ingredients('Apple', 10),
+  //   new Ingredients('Orange', 5)
+  // ];
   constructor() {}
 
   getIngredients() {
@@ -44,5 +45,7 @@ export class ShoppingListService {
     this.ingredients = ingredients;
     this.ingredientsChanged.next(this.ingredients.slice());
   }
+
+
 
 }

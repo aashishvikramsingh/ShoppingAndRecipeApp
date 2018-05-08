@@ -24,6 +24,9 @@ export class DataStorageService {
     const token = this.authenticationService.getToken();
     return this.http.get<Recipe[]>('https://shoppingandrecipeapp.firebaseio.com/' + token.uid + '/recipes.json?auth=' + token.tok)
       .map((response) => {
+        if (!response) {
+          throw new Error('No recipe data to fetch');
+        }
         const recipes: Recipe[] = response;
         for (const recipe of recipes) {
           if (!recipe['ingredients']) {
@@ -48,6 +51,9 @@ export class DataStorageService {
     const token = this.authenticationService.getToken();
     return this.http.get<Ingredients[]>('https://shoppingandrecipeapp.firebaseio.com/' + token.uid + '/shoppingList.json?auth=' + token.tok)
       .subscribe((response) => {
+        if (!response) {
+          throw new Error('No shopping data to fetch');
+        }
         const ingredients: Ingredients[] = response;
         this.shoppingListService.refreshIngredients(ingredients);
       });
