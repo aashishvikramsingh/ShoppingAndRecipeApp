@@ -3,6 +3,7 @@ import { Ingredients } from '../shared/ingredients.model';
 import {ShoppingListService} from './shoppingList.service';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../authentication/authentication.service';
+import {DataStorageService} from '../shared/data-storage.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -18,12 +19,14 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   notificationBannerFlag = false;
 
   constructor(private shoppingListService: ShoppingListService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private dataStorageService: DataStorageService) {
 
   }
   ngOnInit() {
 
-      this.ingredients = this.shoppingListService.getIngredients();
+
+      this.dataStorageService.fetchShoppingList();
       this.subscription = this.shoppingListService.ingredientsChanged
         .subscribe((ingredientsAfterAddingNewItem: Ingredients[]) => {
           this.ingredients = ingredientsAfterAddingNewItem;

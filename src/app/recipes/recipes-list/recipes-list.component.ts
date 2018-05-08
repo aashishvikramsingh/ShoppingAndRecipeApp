@@ -4,6 +4,7 @@ import {RecipeService} from '../recipe.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {DataStorageService} from '../../shared/data-storage.service';
 
 
 @Component({
@@ -19,11 +20,12 @@ export class RecipesListComponent implements OnInit, OnDestroy {
   constructor(private recipeService: RecipeService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService,
+              private dataStorageService: DataStorageService) { }
 
   ngOnInit() {
-    this.recipes = this.recipeService.getRecipes();
 
+    this.dataStorageService.fetchRecipes();
     this.subscription = this.recipeService.recipeListUpdated
       .subscribe((recipes: Recipe[]) => {
         this.recipes = recipes;

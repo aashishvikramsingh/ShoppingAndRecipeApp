@@ -1,6 +1,7 @@
 import {Ingredients} from '../shared/ingredients.model';
 import {Subject} from 'rxjs/Subject';
 
+
 export class ShoppingListService {
 
   ingredientsChanged = new Subject<Ingredients[]>();
@@ -14,7 +15,7 @@ export class ShoppingListService {
   constructor() {}
 
   getIngredients() {
-    return this.ingredients.slice();
+    // return this.ingredients.slice();
   }
 
   getIngredient(ing: number) {
@@ -45,6 +46,7 @@ export class ShoppingListService {
     this.ingredients = ingredients;
     this.ingredientsChanged.next(this.ingredients.slice());
   }
+
 
 
 

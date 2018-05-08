@@ -58,4 +58,5 @@ export class DataStorageService {
         this.shoppingListService.refreshIngredients(ingredients);
       });
   }
+
 }
