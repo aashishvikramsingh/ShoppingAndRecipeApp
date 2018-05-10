@@ -15,7 +15,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredients[];
 
   private subscription: Subscription;
-  private recipeToShoppingTransfer: Subscription;
   private cleanupSubscription: Subscription;
 
   notificationBannerFlag = false;
@@ -35,17 +34,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
           this.ingredients = ingredientsAfterAddingNewItem;
         });
 
-      this.recipeToShoppingTransfer = this.shoppingListService.ingredientsTransferred
-      .subscribe((ingredientsAfterAddingNewItem: Ingredients[]) => {
-        this.ingredients = ingredientsAfterAddingNewItem;
-        this.dataStorageService.saveShoppingList()
-          .subscribe();
-      });
-
-    this.cleanupSubscription = this.authenticationService.cleanupRequired
-      .subscribe(() => {
-        this.shoppingListService.cleanupShoppingList();
-      });
+      this.cleanupSubscription = this.authenticationService.cleanupRequired
+        .subscribe(() => {
+          this.shoppingListService.cleanupShoppingList();
+        });
 
 
 
@@ -55,7 +47,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.cleanupSubscription.unsubscribe();
-    this.recipeToShoppingTransfer.unsubscribe();
   }
 
   onEditItem(index: number) {

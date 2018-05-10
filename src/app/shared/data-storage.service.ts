@@ -6,6 +6,7 @@ import {ShoppingListService} from '../shopping-list/shoppingList.service';
 import {Ingredients} from './ingredients.model';
 import 'rxjs/add/operator/map';
 import {AuthenticationService} from '../authentication/authentication.service';
+import {promise} from 'selenium-webdriver';
 
 @Injectable()
 export class DataStorageService {
@@ -57,6 +58,21 @@ export class DataStorageService {
         const ingredients: Ingredients[] = response;
         this.shoppingListService.refreshIngredients(ingredients);
       });
+  }
+
+  transferIngredientsfromRecipeToShoppingList(ingredients: Ingredients[]) {
+    const token = this.authenticationService.getToken();
+    if (token) {
+        let ingred: Ingredients [] = [];
+        ingred = this.shoppingListService.getIngredients();
+        ingred.push(... ingredients);
+        this.http.put('https://shoppingandrecipeapp.firebaseio.com/' + token.uid + '/shoppingList.json?auth=' + token.tok,
+          ingred).subscribe(() => {
+          this.fetchShoppingList();
+        });
+    }
+
+
   }
 
 }

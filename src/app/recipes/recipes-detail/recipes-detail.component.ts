@@ -30,7 +30,7 @@ export class RecipesDetailComponent implements OnInit {
   }
 
   transferToShoppingList(recipeIngredients: Ingredients[]) {
-    this.recipeService.addRecipeIngredientsToShoppingList(recipeIngredients);
+    this.dataStorageService.transferIngredientsfromRecipeToShoppingList(recipeIngredients);
   }
 
   editRecipe() {
