@@ -25,9 +25,6 @@ export class DataStorageService {
     const token = this.authenticationService.getToken();
     return this.http.get<Recipe[]>('https://shoppingandrecipeapp.firebaseio.com/' + token.uid + '/recipes.json?auth=' + token.tok)
       .map((response) => {
-        if (!response) {
-          throw new Error('No recipe data to fetch');
-        }
         const recipes: Recipe[] = response;
         for (const recipe of recipes) {
           if (!recipe['ingredients']) {
@@ -37,9 +34,10 @@ export class DataStorageService {
         return recipes;
       })
       .subscribe((recipes) => {
-
         this.recipeService.refreshRecipes(recipes);
-      });
+      },
+        (e) => console.log('error while fetching recipes : ' + e )
+        );
   }
 
   saveShoppingList() {
@@ -57,7 +55,8 @@ export class DataStorageService {
         }
         const ingredients: Ingredients[] = response;
         this.shoppingListService.refreshIngredients(ingredients);
-      });
+      },
+        (e) => console.log('error while fetching shopping list : ' + e ));
   }
 
   transferIngredientsfromRecipeToShoppingList(ingredients: Ingredients[]) {
@@ -69,7 +68,8 @@ export class DataStorageService {
         this.http.put('https://shoppingandrecipeapp.firebaseio.com/' + token.uid + '/shoppingList.json?auth=' + token.tok,
           ingred).subscribe(() => {
           this.fetchShoppingList();
-        });
+        },
+          (e) => console.log('error in transferring Ingredients from Recipe to Shopping List : ' + e ));
     }
 
 

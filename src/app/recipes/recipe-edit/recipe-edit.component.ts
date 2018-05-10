@@ -80,7 +80,8 @@ export class RecipeEditComponent implements OnInit {
       this.recipeService.addRecipe(this.recipeForm.value);
     }
     this.datatStorageService.saveRecipes()
-      .subscribe();
+      .subscribe(() => {},
+        (e) => console.log('error while storing recipes : ' + e ));
     this.route.navigate(['../'], {relativeTo: this.activatedRoute});
   }
 

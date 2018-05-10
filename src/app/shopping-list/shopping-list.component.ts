@@ -66,7 +66,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   deleteItem(index: number) {
     this.shoppingListService.deleteItem(index);
     this.dataStorageService.saveShoppingList()
-      .subscribe();
+      .subscribe(() => {},
+        (e) => console.log('error while storing Shopping List : ' + e ));
   }
 
 }

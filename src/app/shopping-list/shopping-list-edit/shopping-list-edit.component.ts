@@ -54,7 +54,8 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
     }
 
     this.dataStorageService.saveShoppingList()
-      .subscribe();
+      .subscribe(() => {},
+        (e) => console.log('error while storing Shopping List ' + e ));
 
     form.reset();
 
@@ -73,7 +74,8 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
       this.clearFields();
     }
     this.dataStorageService.saveShoppingList()
-      .subscribe();
+      .subscribe(() => {},
+        (e) => console.log('error while storing Shopping List ' + e ));
   }
 
   isAuthenticated() {

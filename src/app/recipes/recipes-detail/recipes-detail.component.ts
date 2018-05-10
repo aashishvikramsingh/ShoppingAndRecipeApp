@@ -40,7 +40,8 @@ export class RecipesDetailComponent implements OnInit {
   deleteRecipe() {
     this.recipeService.deleteRecipe(this.id);
     this.dataStorageService.saveRecipes()
-      .subscribe();
+      .subscribe(() => {},
+        (e) => console.log('error while storing recipes : ' + e ));
     this.route.navigate(['/recipes']);
   }
 

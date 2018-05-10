@@ -17,7 +17,8 @@ export class HeaderComponent {
 
   saveRecipes() {
     this.dataStorageService.saveRecipes()
-      .subscribe();
+      .subscribe(() => {},
+        (e) => console.log('error while storing recipes ' + e ));
   }
 
   fetchRecipes() {
@@ -26,7 +27,8 @@ export class HeaderComponent {
 
   saveShoppingList() {
     this.dataStorageService.saveShoppingList()
-      .subscribe();
+      .subscribe(() => {},
+        (e) => console.log('error while storing Shopping List' + e ));
   }
 
   fetchShoppingList() {
