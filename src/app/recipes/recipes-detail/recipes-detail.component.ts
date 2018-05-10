@@ -4,6 +4,7 @@ import {Ingredients} from '../../shared/ingredients.model';
 import {RecipeService} from '../recipe.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {DataStorageService} from '../../shared/data-storage.service';
 
 @Component({
   selector: 'app-recipes-detail',
@@ -17,7 +18,8 @@ export class RecipesDetailComponent implements OnInit {
   constructor(private recipeService: RecipeService,
               private activatedRoute: ActivatedRoute,
               private route: Router,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService,
+              private dataStorageService: DataStorageService) { }
 
   ngOnInit() {
     this.activatedRoute.params
@@ -37,6 +39,8 @@ export class RecipesDetailComponent implements OnInit {
 
   deleteRecipe() {
     this.recipeService.deleteRecipe(this.id);
+    this.dataStorageService.saveRecipes()
+      .subscribe();
     this.route.navigate(['/recipes']);
   }
 

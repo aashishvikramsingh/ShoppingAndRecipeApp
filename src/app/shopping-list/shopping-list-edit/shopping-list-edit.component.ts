@@ -4,6 +4,7 @@ import {ShoppingListService} from '../shoppingList.service';
 import {NgForm} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {DataStorageService} from '../../shared/data-storage.service';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -19,7 +20,8 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   edittedIngredient: Ingredients;
 
   constructor(private shoppingListService: ShoppingListService,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService,
+              private dataStorageService: DataStorageService) { }
 
   ngOnInit() {
     this.subscription = this.shoppingListService.editingItem
@@ -33,6 +35,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
             amount : this.edittedIngredient.amount
           });
         });
+
   }
 
   ngOnDestroy() {
@@ -50,6 +53,9 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
       this.edittedItemIndex = -1;
     }
 
+    this.dataStorageService.saveShoppingList()
+      .subscribe();
+
     form.reset();
 
 
@@ -66,6 +72,8 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
       this.shoppingListService.deleteItem(this.edittedItemIndex);
       this.clearFields();
     }
+    this.dataStorageService.saveShoppingList()
+      .subscribe();
   }
 
   isAuthenticated() {
