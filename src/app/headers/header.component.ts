@@ -13,9 +13,7 @@ export class HeaderComponent {
 
   saveRecipes() {
     this.dataStorageService.saveRecipes()
-      .subscribe((e) => {
-        console.log(e);
-      });
+      .subscribe();
   }
 
   fetchRecipes() {

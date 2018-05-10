@@ -23,6 +23,7 @@ import { SignupComponent } from './authentication/signup/signup.component';
 import { SigninComponent } from './authentication/signin/signin.component';
 import {AuthenticationService} from './authentication/authentication.service';
 import {AuthenticationGuardService} from './authentication/authentication-guard.service';
+import CleanupService from './shared/cleanup.service';
 
 
 
@@ -49,7 +50,8 @@ import {AuthenticationGuardService} from './authentication/authentication-guard.
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [ShoppingListService, RecipeService, DataStorageService, AuthenticationService, AuthenticationGuardService],
+  providers: [ShoppingListService, RecipeService, DataStorageService, AuthenticationService,
+    AuthenticationGuardService, CleanupService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

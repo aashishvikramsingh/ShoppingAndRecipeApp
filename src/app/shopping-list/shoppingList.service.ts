@@ -5,6 +5,7 @@ import {Subject} from 'rxjs/Subject';
 export class ShoppingListService {
 
   ingredientsChanged = new Subject<Ingredients[]>();
+  ingredientsTransferred = new Subject<Ingredients[]>();
   editingItem = new Subject<number>();
 
   private ingredients: Ingredients[] = [];
@@ -26,7 +27,7 @@ export class ShoppingListService {
 
   addIngredientsToShoppingList(ingredients: Ingredients[]) {
     this.ingredients.push(...ingredients);
-    this.ingredientsChanged.next(this.ingredients.slice());
+    this.ingredientsTransferred.next(this.ingredients.slice());
   }
 
   editIngredient(index: number, ing: Ingredients) {
@@ -42,6 +43,10 @@ export class ShoppingListService {
   refreshIngredients(ingredients: Ingredients[]) {
     this.ingredients = ingredients;
     this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
+  cleanupShoppingList() {
+    this.ingredients = [];
   }
 
 

@@ -15,6 +15,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredients[];
 
   private subscription: Subscription;
+  private recipeToShoppingTransfer: Subscription;
 
   notificationBannerFlag = false;
 
@@ -31,6 +32,12 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         .subscribe((ingredientsAfterAddingNewItem: Ingredients[]) => {
           this.ingredients = ingredientsAfterAddingNewItem;
         });
+      this.recipeToShoppingTransfer = this.shoppingListService.ingredientsTransferred
+      .subscribe((ingredientsAfterAddingNewItem: Ingredients[]) => {
+        this.ingredients = ingredientsAfterAddingNewItem;
+        this.dataStorageService.saveShoppingList()
+          .subscribe();
+      });
 
 
   }
