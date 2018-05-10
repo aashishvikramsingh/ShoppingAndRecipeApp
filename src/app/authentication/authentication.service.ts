@@ -1,15 +1,16 @@
 import * as firebase from 'firebase';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import CleanupService from '../shared/cleanup.service';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class AuthenticationService {
 
   token = null;
 
-  constructor(private router: Router,
-              private cleanupService: CleanupService) {}
+  cleanupRequired = new Subject<Boolean>();
+
+  constructor(private router: Router) {}
 
   signUp(email: string, password: string) {
 
@@ -36,7 +37,7 @@ export class AuthenticationService {
           tok: token,
           uid: uid
           };
-          this.cleanupService.cleanupObjects();
+          this.cleanupRequired.next(true);
         });
       })
       .catch((e) => {
@@ -55,7 +56,7 @@ export class AuthenticationService {
 
   isAuthenticated() {
     if (this.token === null) {
-      this.cleanupService.cleanupObjects();
+      this.cleanupRequired.next(true);
     }
     return this.token != null;
   }
@@ -64,7 +65,7 @@ export class AuthenticationService {
 
     firebase.auth().signOut();
     this.token = null;
-    this.cleanupService.cleanupObjects();
+    this.cleanupRequired.next(true);
     this.router.navigate(['/']);
   }
 

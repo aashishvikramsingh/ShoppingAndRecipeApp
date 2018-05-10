@@ -16,7 +16,7 @@ import {DataStorageService} from '../../shared/data-storage.service';
 export class RecipesListComponent implements OnInit, OnDestroy {
   recipes: Recipe[];
   subscription: Subscription;
-
+  cleanupSubscription: Subscription;
   constructor(private recipeService: RecipeService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -30,6 +30,10 @@ export class RecipesListComponent implements OnInit, OnDestroy {
       .subscribe((recipes: Recipe[]) => {
         this.recipes = recipes;
       });
+    this.cleanupSubscription = this.authenticationService.cleanupRequired
+      .subscribe(() => {
+        this.recipeService.cleanupRecipes();
+      });
 
   }
 
@@ -39,6 +43,7 @@ export class RecipesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.cleanupSubscription.unsubscribe();
   }
 
   isAuthenticated() {

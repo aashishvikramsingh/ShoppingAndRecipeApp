@@ -23,7 +23,6 @@ import { SignupComponent } from './authentication/signup/signup.component';
 import { SigninComponent } from './authentication/signin/signin.component';
 import {AuthenticationService} from './authentication/authentication.service';
 import {AuthenticationGuardService} from './authentication/authentication-guard.service';
-import CleanupService from './shared/cleanup.service';
 
 
 
@@ -51,7 +50,7 @@ import CleanupService from './shared/cleanup.service';
     HttpClientModule
   ],
   providers: [ShoppingListService, RecipeService, DataStorageService, AuthenticationService,
-    AuthenticationGuardService, CleanupService],
+    AuthenticationGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
