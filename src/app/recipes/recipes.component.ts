@@ -1,4 +1,4 @@
-import {Component,OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 
 @Component({
@@ -7,9 +7,11 @@ import {Component,OnInit} from '@angular/core';
   styleUrls: ['./recipes.component.css'],
   providers: []
 })
-export class RecipesComponent implements OnInit{
+export class RecipesComponent implements OnInit {
 
 
   constructor() { }
+
+  ngOnInit() {}
 
 }
