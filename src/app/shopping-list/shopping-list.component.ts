@@ -63,4 +63,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     setTimeout(() => this.notificationBannerFlag = false, 3000);
   }
 
+  deleteItem(index: number) {
+    this.shoppingListService.deleteItem(index);
+    this.dataStorageService.saveShoppingList()
+      .subscribe();
+  }
+
 }

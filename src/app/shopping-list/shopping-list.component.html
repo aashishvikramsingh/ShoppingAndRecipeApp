@@ -14,9 +14,49 @@
     <hr>
 
     <ul>
+      <div class="row">
+        <div class="col-xs-6">
+          <strong>
+            Item
+          </strong>
+        </div>
+        <div class="col-xs-4">
+          <strong>
+            Amount
+          </strong>
+
+        </div>
+        <div class="col-xs-2">
+          <span class="pull-right">
+            <strong>
+              Delete
+            </strong>
+
+          </span>
+        </div>
+      </div>
       <a *ngFor="let item of ingredients; let i = index" class="list-group-item" style="cursor: pointer"
          (click)="isAuthenticated() ? onEditItem(i) : displayBanner()">
-        <span>{{item.name}} </span><span class="pull-right">{{item.amount}}</span>
+        <div class="row">
+          <div class="col-xs-6">
+            {{item.name}}
+          </div>
+          <div class="col-xs-4">
+            {{item.amount}}
+          </div>
+          <div class="col-xs-2">
+            <a style="color: red" (click)="deleteItem(i)" class=" pull-right">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        <!--<span>{{item.name}} </span>-->
+        <!--<span>{{item.amount}}</span>-->
+        <!--<span  class="pull-right">-->
+          <!--<a style="color: red" (click)="deleteItem(i)">-->
+            <!--<i class="fa fa-times" aria-hidden="true"></i>-->
+          <!--</a>-->
+        <!--</span>-->
       </a>
     </ul>
   </div>
