@@ -11,6 +11,10 @@ export class HeaderComponent {
   constructor(private dataStorageService: DataStorageService,
               private authenticationService: AuthenticationService) {}
 
+  username = '';
+
+
+
   saveRecipes() {
     this.dataStorageService.saveRecipes()
       .subscribe();
@@ -30,10 +34,12 @@ export class HeaderComponent {
   }
 
   isAuthenticate() {
+    this.username = this.authenticationService.getUsername();
     return this.authenticationService.isAuthenticated();
   }
 
   logout() {
     this.authenticationService.logout();
   }
+
 }

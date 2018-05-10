@@ -7,7 +7,7 @@ import {Subject} from 'rxjs/Subject';
 export class AuthenticationService {
 
   token = null;
-
+  email = '';
   cleanupRequired = new Subject<Boolean>();
 
   constructor(private router: Router) {}
@@ -29,6 +29,7 @@ export class AuthenticationService {
     this.token = null;
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((respone) => {
+        this.email = respone.email;
         const uid = respone.uid;
         this.router.navigate(['/recipes']);
         firebase.auth().currentUser.getIdToken()
@@ -67,6 +68,10 @@ export class AuthenticationService {
     this.token = null;
     this.cleanupRequired.next(true);
     this.router.navigate(['/']);
+  }
+
+  getUsername() {
+    return this.email.split('@')[0];
   }
 
 }
