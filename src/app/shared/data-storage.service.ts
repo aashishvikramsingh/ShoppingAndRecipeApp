@@ -6,7 +6,6 @@ import {ShoppingListService} from '../shopping-list/shoppingList.service';
 import {Ingredients} from './ingredients.model';
 import 'rxjs/add/operator/map';
 import {AuthenticationService} from '../authentication/authentication.service';
-import {promise} from 'selenium-webdriver';
 
 @Injectable()
 export class DataStorageService {
