@@ -44,18 +44,26 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
   submitContent(form: NgForm) {
     const value = form.value;
-    const ingredients  = new Ingredients(value.name, value.amount);
+    const ingredient  = new Ingredients(value.name, value.amount);
     if (!this.editMode) {
-      this.shoppingListService.addNewItem(ingredients);
+      this.dataStorageService.addIngredient(ingredient.id, ingredient)
+        .subscribe(() => {
+            this.shoppingListService.addNewItem(ingredient);
+          },
+          (e) => console.log('error while storing Shopping List ' + e ));
+
     } else {
-      this.shoppingListService.editIngredient(this.edittedItemIndex, ingredients);
+      ingredient.id = this.edittedIngredient.id;
+      this.dataStorageService.modifyIngredient(ingredient.id , ingredient)
+        .subscribe(() => {
+            this.shoppingListService.editIngredient(this.edittedItemIndex, ingredient);
+          },
+          (e) => console.log('error while storing Shopping List ' + e ));
+
       this.editMode = false;
       this.edittedItemIndex = -1;
     }
 
-    this.dataStorageService.saveShoppingList()
-      .subscribe(() => {},
-        (e) => console.log('error while storing Shopping List ' + e ));
 
     form.reset();
 
@@ -70,12 +78,15 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
   deleteItem() {
     if (this.edittedItemIndex !== -1) {
-      this.shoppingListService.deleteItem(this.edittedItemIndex);
-      this.clearFields();
+      const ingredient = this.shoppingListService.getIngredient(this.edittedItemIndex);
+      this.dataStorageService.deleteIngredient(ingredient.id)
+        .subscribe(() => {
+            this.shoppingListService.deleteItem(this.edittedItemIndex);
+            this.clearFields();
+          },
+          (e) => console.log('error while storing Shopping List ' + e ));
     }
-    this.dataStorageService.saveShoppingList()
-      .subscribe(() => {},
-        (e) => console.log('error while storing Shopping List ' + e ));
+
   }
 
   isAuthenticated() {

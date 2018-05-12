@@ -63,11 +63,16 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     setTimeout(() => this.notificationBannerFlag = false, 3000);
   }
 
-  deleteItem(index: number) {
-    this.shoppingListService.deleteItem(index);
-    this.dataStorageService.saveShoppingList()
-      .subscribe(() => {},
-        (e) => console.log('error while storing Shopping List : ' + e ));
+  deleteItem(index) {
+
+    const ingredient = this.shoppingListService.getIngredient(index);
+    this.dataStorageService.deleteIngredient(ingredient.id)
+      .subscribe(() => {
+          this.shoppingListService.deleteItem(index);
+        },
+        (e) => console.log('error while storing Shopping List ' + e ));
+
+
   }
 
 }
