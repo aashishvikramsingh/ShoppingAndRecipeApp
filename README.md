@@ -1,4 +1,4 @@
-#Shopping and Recipe App
+# Shopping and Recipe App
 
 This is a simple side project implemented to put in the concepts learned about Angular5 in practice. Explored concepts like Observables, Angular Forms, Custom Forms, Angular Router, Subjects, etc.
 
