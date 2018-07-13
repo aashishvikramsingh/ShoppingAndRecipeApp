@@ -14,4 +14,3 @@ A simple recipe and shopping list management app developed using angular5, types
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-`A basic working copy of this app can be found at: ` http://shopping-recipe-app.s3-website-us-east-1.amazonaws.com 
